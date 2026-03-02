@@ -1,10 +1,13 @@
 
 async function searchCountry(countryName) {
+    const spinner = document.getElementById("loading-spinner");
+    const container = document.getElementById("country-info");
     try {
-        const container = document.getElementById("country-info");
-        // Show loading spinner
         
+        // Show loading spinner
+
         // Fetch country data
+        spinner.style.display="block";
         const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
          if (!response.ok) {
             container.innerHTML = "Country does not exist. Try again!";
@@ -34,8 +37,8 @@ if (border_countries.length === 0) {
     return;
 }
 
-// Single API request (cleaner + faster)
-const response2 = await fetch(
+else{
+    const response2 = await fetch(
     `https://restcountries.com/v3.1/alpha?codes=${border_countries.join(",")}`
 );
 
@@ -51,13 +54,17 @@ borderData.forEach(borderCountry => {
 listHTML += "</ul>";
 
 borderContainer.innerHTML = listHTML;
+}// Single API request (cleaner + faster)
+
 
         // Update bordering countries section
     } catch (error) {
         // Show error message
+        container.innerHTML = "Something went wrong. Please try again.";
        
     } finally {
         // Hide loading spinner
+        spinner.style.display = "none";
     }
 }
 
