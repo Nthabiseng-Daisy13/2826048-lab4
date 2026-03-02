@@ -5,9 +5,9 @@ async function searchCountry(countryName) {
     const borderContainer = document.getElementById("bordering-countries");
     const errorMessage = document.getElementById("error-message");
 
-    container.innerHTML = " ";
-    borderContainer.innerHTML = " ";
-    errorMessage.textContent = " ";
+    container.innerHTML = "";
+    borderContainer.innerHTML = "";
+    errorMessage.textContent = "";
     try {
         
         // Show loading spinner
@@ -33,8 +33,7 @@ async function searchCountry(countryName) {
 `;
         // Fetch bordering countries
     
-    borderContainer.innerHTML = "";
-
+   
 const border_countries = country.borders || [];
 
 if (border_countries.length === 0) {
@@ -69,7 +68,6 @@ borderContainer.innerHTML = listHTML;
 
         // Update bordering countries section
     } catch (error) {
-        // Show error message
         
         errorMessage.textContent = "Country does not exist, Please try again!";
        
