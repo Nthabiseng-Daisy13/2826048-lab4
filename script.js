@@ -2,6 +2,12 @@
 async function searchCountry(countryName) {
     const spinner = document.getElementById("loading-spinner");
     const container = document.getElementById("country-info");
+    const borderContainer = document.getElementById("bordering-countries");
+    const errorMessage = document.getElementById("error-message");
+
+    container.innerHTML = " ";
+    borderContainer.innerHTML = " ";
+    errorMessage.textContent = " ";
     try {
         
         // Show loading spinner
@@ -26,7 +32,7 @@ async function searchCountry(countryName) {
     <img src="${country.flags.svg}" alt="${country.name.common} flag">
 `;
         // Fetch bordering countries
-    const borderContainer = document.getElementById("bordering-countries");
+    
     borderContainer.innerHTML = "";
 
 const border_countries = country.borders || [];
@@ -64,7 +70,7 @@ borderContainer.innerHTML = listHTML;
         // Update bordering countries section
     } catch (error) {
         // Show error message
-        const errorMessage = document.getElementById("error-message");
+        
         errorMessage.textContent = "Country does not exist, Please try again!";
        
     } finally {
