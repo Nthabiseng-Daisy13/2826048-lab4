@@ -8,10 +8,9 @@ async function searchCountry(countryName) {
 
         // Fetch country data
         spinner.style.display="block";
-        const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+        const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
          if (!response.ok) {
-            container.innerHTML = "Country does not exist. Try again!";
-            return;
+            throw new Error("Country not found, please try again!");
         }
         const data = await response.json();
         const country = data[0];
@@ -28,7 +27,7 @@ async function searchCountry(countryName) {
 `;
         // Fetch bordering countries
     const borderContainer = document.getElementById("bordering-countries");
-borderContainer.innerHTML = "";
+    borderContainer.innerHTML = "";
 
 const border_countries = country.borders || [];
 
@@ -48,7 +47,12 @@ const borderData = await response2.json();
 let listHTML = "<h3>Bordering Countries:</h3><ul>";
 
 borderData.forEach(borderCountry => {
-    listHTML += `<li>${borderCountry.name.common}</li>`;
+    listHTML += `
+    <li>
+        ${borderCountry.name.common}
+        <img src="${borderCountry.flags.svg}" width="100">
+    </li>
+`;
 });
 
 listHTML += "</ul>";
@@ -60,7 +64,8 @@ borderContainer.innerHTML = listHTML;
         // Update bordering countries section
     } catch (error) {
         // Show error message
-        container.innerHTML = "Something went wrong. Please try again.";
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.textContent = "Country does not exist, Please try again!";
        
     } finally {
         // Hide loading spinner
